@@ -19,11 +19,13 @@ def img_to_single(train_data_full__folder, train_data_single_folder):
     images = os.listdir(train_data_full__folder)
     for img in images:
         image = Image.open('%s/%s' % (train_data_full__folder, img)).convert("L")
-        x_size, y_size = image.size
-        y_size -= 5
+        x_size, y_size = image.size  # 72 27
+        print(image.size)
+        y_size -= 5 # 22
+        print(y_size)
         # y from 1 to y_size-5
         # x from 4 to x_size-18
-        piece = (x_size-22) / 8
+        piece = (x_size-24) / 8
         centers = [4+piece*(2*i+1) for i in range(4)]
         pre = img.split('.')[0]
         for i, center in enumerate(centers):

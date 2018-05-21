@@ -44,11 +44,11 @@ if __name__ == '__main__':
     print('... 加载数据中')
     x_data, y_data = load_data()
 
-    print ('... 训练模型中')
+    print('... 训练模型中')
     X_train, X_test, y_train, y_test = train_test_split(x_data, y_data, test_size=0.1, random_state=0)
     train(X_train, y_train, model_file)
 
-    print ('... 测试模型中')
+    print('... 测试模型中')
     clf = joblib.load(model_file)
     answer = clf.predict(X_test)
     single_acc = sum(y_test == answer) * 1.0 / len(answer)

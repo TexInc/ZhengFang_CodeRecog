@@ -21,7 +21,7 @@ def verify(url, model, save=False):
     """
     session = requests.session()
     if save:
-        pic_file = 'cache/todo.png'
+        pic_file = 'cache/captcha.png'
         urllib.request.urlretrieve(url, pic_file)
         image = Image.open(pic_file).convert("L")
     else:
@@ -35,14 +35,14 @@ def verify(url, model, save=False):
 
     # y from 1 to y_size-5
     # x from 4 to x_size-18
-    piece = (x_size-22) / 8
+    piece = (x_size-24) / 8
     centers = [4+piece*(2*i+1) for i in range(4)]
     data = np.empty((4, 21 * 16), dtype="float32")
     for i, center in enumerate(centers):
         single_pic = image.crop((center-(piece+2), 1, center+(piece+2), y_size))
         data[i, :] = np.asarray(single_pic, dtype="float32").flatten() / 255.0
         if save:
-            single_pic.save('cache/todo-%s.png' % i)
+            single_pic.save('cache/captcha-%s.png' % i)
     clf = joblib.load(model)
     answers = clf.predict(data)
     answers = map(chr, map(lambda x: x + 48 if x <= 9 else x + 87 if x <= 23 else x + 88, map(int, answers)))
